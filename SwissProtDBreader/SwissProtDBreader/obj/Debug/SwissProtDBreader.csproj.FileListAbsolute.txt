@@ -1,8 +1,0 @@
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\obj\Debug\SwissProtDBreader.csproj.AssemblyReference.cache
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\obj\Debug\SwissProtDBreader.csproj.SuggestedBindingRedirects.cache
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\obj\Debug\SwissProtDBreader.csproj.CoreCompileInputs.cache
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\bin\Debug\SwissProtDBreader.exe.config
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\bin\Debug\SwissProtDBreader.exe
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\bin\Debug\SwissProtDBreader.pdb
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\obj\Debug\SwissProtDBreader.exe
-C:\Users\hmdebern.UTMB-USERS-M\source\repos\SwissProtDBreader\SwissProtDBreader\obj\Debug\SwissProtDBreader.pdb
