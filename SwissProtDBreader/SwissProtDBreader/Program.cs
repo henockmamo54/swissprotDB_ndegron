@@ -44,13 +44,27 @@ namespace SwissProtDBreader
                         {
                             dif = i - previndex + 1;
                             if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
-                            {
-                                count++;
-                                temp.Add(sequenceChars.Substring(previndex, i + 1 - previndex));
+                            { 
+                                count++;  
                             }
+
+                            temp.Add(sequenceChars.Substring(previndex, i + 1 - previndex));
+
                             previndex = i + 1;
+                            
                         }
                     }
+
+                    // handle the edge case
+                    dif = sequenceChars.Length - previndex ;
+                    if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
+                    {
+                        count++;
+                    }
+                    temp.Add(sequenceChars.Substring(previndex, sequenceChars.Length  - previndex));
+
+
+
                     protien.NumberOfTrypticPeptide = count;
                     matchedutmbData.Add(protien);
                 }
