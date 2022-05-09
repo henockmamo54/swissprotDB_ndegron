@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProteinData.cs" />
     <Compile Include="spDataModel.cs" />
+    <Compile Include="utmbProtienData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
