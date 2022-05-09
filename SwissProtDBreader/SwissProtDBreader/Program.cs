@@ -26,6 +26,8 @@ namespace SwissProtDBreader
             string sequenceChars = "";
             int previndex = 0;
             int dif = 0;
+            int missedC1 = -1;
+            int missedC2 = -1;
 
             List<string> temp = new List<string>();
 
@@ -40,28 +42,80 @@ namespace SwissProtDBreader
 
                     for (int i = 0; i < sequenceChars.Length; i++)
                     {
+
                         if (sequenceChars[i] == 'K' || sequenceChars[i] == 'R')
                         {
+                            // check the current r or k 
                             dif = i - previndex + 1;
                             if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
-                            { 
-                                count++;  
+                            {
+                                count++;
+                                temp.Add(sequenceChars.Substring(previndex, i + 1 - previndex));
                             }
 
-                            temp.Add(sequenceChars.Substring(previndex, i + 1 - previndex));
+                            // check the current - 1 r or k
 
+                            if (missedC1 >= 0)
+                            {
+                                dif = i - missedC1 + 1;
+                                if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
+                                {
+                                    count++;
+                                    temp.Add(sequenceChars.Substring(missedC1, i + 1 - missedC1));
+                                }
+                            }
+
+                            // check the current -2 r ork 
+
+                            if (missedC2 >= 0)
+                            {
+                                dif = i - missedC2 + 1;
+                                if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
+                                {
+                                    count++;
+                                    temp.Add(sequenceChars.Substring(missedC2, i + 1 - missedC2));
+                                }
+                            }
+
+                            missedC2 = missedC1;
+                            missedC1 = previndex;
                             previndex = i + 1;
-                            
+
                         }
+
                     }
 
+                    #region edge case
                     // handle the edge case
-                    dif = sequenceChars.Length - previndex ;
+                    dif = sequenceChars.Length - previndex;
                     if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
                     {
                         count++;
+                        temp.Add(sequenceChars.Substring(previndex, sequenceChars.Length - previndex));
                     }
-                    temp.Add(sequenceChars.Substring(previndex, sequenceChars.Length  - previndex));
+
+                    // check the current - 1 r or k
+                    if (missedC1 >= 0)
+                    {
+                        dif = sequenceChars.Length - missedC1;
+                        if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
+                        {
+                            count++;
+                            temp.Add(sequenceChars.Substring(missedC1, sequenceChars.Length - missedC1));
+                        }
+                    }
+
+                    // check the current -2 r ork 
+                    if (missedC2 >= 0)
+                    {
+                        dif = sequenceChars.Length - missedC2;
+                        if (dif >= min_number_AminoAcidSeq && dif <= max_number_AminoAcidSeq)
+                        {
+                            count++;
+                            temp.Add(sequenceChars.Substring(missedC2, sequenceChars.Length - missedC2));
+                        }
+                    }
+                    #endregion
 
 
 
