@@ -16,8 +16,10 @@ namespace SwissProtDBreader
 
             //fast protein
             var f_protien = protienData.Where(x => x.RateConstant >= 0.8).Take(200).ToList();
-            var type1 = 0;
-            var type2 = 0;
+            var type1 = new List<string>();
+            var type2 = new List<string>();
+            var type3 = new List<string>();
+            var nottype2or1 = new List<string>();
             var n_or_c = 0;
 
             var no_sp = 0;
@@ -32,19 +34,23 @@ namespace SwissProtDBreader
                     //string last_seq = temp_seq.Skip(temp_seq.Length - 20).Take(20).ToString();
 
                     var is_type1 = (first_seq.Contains("MK") || first_seq.Contains("MR") || first_seq.Contains("MH"));
-                    var is_type2 = (first_seq.Contains("ML") || first_seq.Contains("MF") || first_seq.Contains("MW") || first_seq.Contains("MV") || first_seq.Contains("MI"));
+                    var is_type2 = (first_seq.Contains("ML") || first_seq.Contains("MF") || first_seq.Contains("MW") || first_seq.Contains("MY") || first_seq.Contains("MI"));
+                    var is_type3 = (first_seq.Contains("MN") || first_seq.Contains("MQ") );
 
-                    if (is_type1) type1++;
-                    if (is_type2) type2++;
 
-                    if (is_type1 || is_type2) n_or_c++;
+                    if (is_type1) type1.Add(protien.name) ;
+                    if (is_type2) type2.Add(protien.name);
+                    if (is_type3) type3.Add(protien.name);
+
+                    if (is_type1 || is_type2 || is_type3) n_or_c++;
+                    if (!(is_type1 || is_type2)) nottype2or1.Add(protien.name); ;
 
                 }
                 else no_sp++;
 
             }
 
-            Console.WriteLine("Total = " + f_protien.Count + " type1 = " + type1 + " type2 " + type2 + " type1 or type2 " + n_or_c + " np_sp " + no_sp);
+            Console.WriteLine("Total = " + f_protien.Count + " type1 = " + type1.Count() + " type2 " + type2.Count() + " type1 or type2 " + n_or_c + " np_sp " + no_sp);
 
             //======================================
 
