@@ -20,7 +20,36 @@ namespace SwissProtDBreader
             //var protienData = d.loadProteinRateConst();
             var protienData = d.loadutmbProtienData();
 
+            var peptidelist = d.loadPeptidesPerprotien();
 
+            #region trypsin related thingy
+
+            var temp_data = spdb.AsParallel().Where(x => x.Description.Contains("_MOUSE")).ToList();
+
+            List<string> passed_list = new List<string>();
+
+            foreach (string p in peptidelist)
+            {
+                var cont = temp_data.AsParallel().Where(x => x.Seq.Contains(p)).ToList();
+                if (cont.Count == 0) passed_list.Add(p);
+            }
+
+            TextWriter tw = new StreamWriter("trypsin.csv");
+            string fileContent = "Peptidelist\n";
+            foreach (var x in peptidelist)
+            {
+                fileContent += x + "\n";
+            }
+
+            tw.WriteLine(fileContent);
+            tw.Close();
+
+
+            #endregion
+
+            return;
+
+            #region tryptic peptide
             List<utmbProtienData> matchedutmbData = new List<utmbProtienData>();
             int count = 0;
             string sequenceChars = "";
@@ -29,11 +58,11 @@ namespace SwissProtDBreader
             int missedC1 = -1;
             int missedC2 = -1;
 
+            // count tryptic peptide
             List<string> temp = new List<string>();
-
             foreach (var protien in protienData)
             {
-                var seq = spdb.AsParallel().Where(x => x.Description.Contains(protien.Entry)).ToList();
+                var seq = spdb.AsParallel().Where(x => x.ID.Contains(protien.Entry)).ToList();
                 if (seq.Any())
                 {
                     count = 0;
@@ -126,7 +155,7 @@ namespace SwissProtDBreader
 
             //CreateCSV(matchedutmbData, "test.csv");
             prepareCSV(matchedutmbData);
-
+            #endregion
 
             #region degrons
             /*
@@ -207,6 +236,21 @@ namespace SwissProtDBreader
             #endregion
         }
 
+        public static void prepareCSV(List<utmbProtienData> data, string path)
+        {
+            TextWriter tw = new StreamWriter(path);
+            string fileContent = "yourlist,Entry,Entry_name,Status,Protein_names,Gene_names,Organism,Length,NumberOfTrypticPeptide\n";
+            foreach (var x in data)
+            {
+                fileContent += x.yourlist + "," + x.Entry + "," + x.Entry_name + "," + x.Status + "," + x.Protein_names + "," + x.Gene_names +
+                    "," + x.Organism + "," + x.Length + "," + x.NumberOfTrypticPeptide + "\n";
+            }
+
+            tw.WriteLine(fileContent);
+            tw.Close();
+
+        }
+
         public static void prepareCSV(List<utmbProtienData> data)
         {
             TextWriter tw = new StreamWriter("test.csv");
@@ -256,5 +300,6 @@ namespace SwissProtDBreader
                 sw.Write(lastProp.GetValue(item) + sw.NewLine);
             }
         }
+
     }
 }

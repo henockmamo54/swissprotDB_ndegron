@@ -41,7 +41,8 @@ namespace SwissProtDBreader
 
                         spDataModel sp = new spDataModel();
                         sp.Seq = protein_seq;
-                        sp.Description = protein_descritption.Split('|')[1].Trim();
+                        sp.ID = protein_descritption.Split('|')[1].Trim();
+                        sp.Description = protein_descritption.Split('|')[2].Trim();
                         spData.Add(sp);
                     }
 
@@ -143,6 +144,53 @@ namespace SwissProtDBreader
                                 proteinData.Organism = content[6].Trim();
                                 proteinData.Length = content[7].Trim();
                                 proteinDataList.Add(proteinData);
+                            }
+                            catch (Exception ex) { continue; }
+                        }
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.ToString());
+                }
+
+            }
+
+            return proteinDataList;
+        }
+
+
+
+        public List<string> loadPeptidesPerprotien()
+        {
+
+            //string path = "C:/Workplace/Python/d2omeplusAnalysis/d2omePlusAnalysis/Protein_List.utmb.0311_2022.csv";
+            string path = "_tryp.csv";
+            List<string> proteinDataList = new List<string>();
+
+
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                try
+                {
+                    //read all the lines
+                    string[] lines = System.IO.File.ReadAllLines(path);
+                    lines = lines.Where(x => x.Length > 0).ToArray();
+
+                    for (int i = 1; i < lines.Length - 1; i++)
+                    {
+                        var content = lines[i].Trim().Split(',');
+
+                        if (content.Length > 1)
+                        {
+                            try
+                            {
+                                proteinDataList.Add(content[0].Trim());
                             }
                             catch (Exception ex) { continue; }
                         }
