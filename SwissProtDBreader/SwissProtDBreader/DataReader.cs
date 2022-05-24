@@ -164,11 +164,11 @@ namespace SwissProtDBreader
 
 
 
-        public List<string> loadPeptidesPerprotien()
+        public List<string> loadPeptidesPerprotien(String filename)
         {
 
             //string path = "C:/Workplace/Python/d2omeplusAnalysis/d2omePlusAnalysis/Protein_List.utmb.0311_2022.csv";
-            string path = "_tryp.csv";
+            string path = filename; //"_tryp.csv";
             List<string> proteinDataList = new List<string>();
 
 
@@ -190,7 +190,7 @@ namespace SwissProtDBreader
                         {
                             try
                             {
-                                proteinDataList.Add(content[0].Trim());
+                                proteinDataList.Add(content[0].Trim() + '_' + content[4].Trim() + '_' + content[5].Trim());
                             }
                             catch (Exception ex) { continue; }
                         }

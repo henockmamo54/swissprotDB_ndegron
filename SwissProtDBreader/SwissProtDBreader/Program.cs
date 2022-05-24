@@ -20,7 +20,9 @@ namespace SwissProtDBreader
             //var protienData = d.loadProteinRateConst();
             var protienData = d.loadutmbProtienData();
 
-            var peptidelist = d.loadPeptidesPerprotien();
+            //string filename = "_tryp.csv";
+            string filename = "_spK22E_HUMAN.csv";
+            var peptidelist = d.loadPeptidesPerprotien(filename);
 
             #region trypsin related thingy
 
@@ -34,7 +36,7 @@ namespace SwissProtDBreader
                 if (cont.Count == 0) passed_list.Add(p);
             }
 
-            TextWriter tw = new StreamWriter("trypsin.csv");
+            TextWriter tw = new StreamWriter("G_" + filename);
             string fileContent = "Peptidelist\n";
             foreach (var x in peptidelist)
             {
